@@ -1,0 +1,315 @@
+/* Style 3 colonnes : Dépenses | Synthèse | Revenus */
+
+:root {
+  --bg: #f7f9fb;
+  --card: #fff;
+  --text: #222;
+  --muted: #666;
+  --accent: #2ecc71;
+  --danger: #e74c3c;
+  --radius: 12px;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  background: linear-gradient(120deg, var(--bg) 0%, #e3e9f0 100%);
+  color: var(--text);
+}
+
+main.container {
+  max-width: 1200px;
+  margin: 40px auto;
+  background: var(--card);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(30,60,90,0.10);
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  align-items: flex-start;
+  padding: 32px 24px 24px 24px;
+}
+
+section {
+  background: #f8fafc;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 12px rgba(30,60,90,0.06);
+  padding: 18px 12px;
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 0;
+}
+
+section.synthese {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+section h2 {
+  font-size: 1.15rem;
+  margin: 0 0 12px 0;
+  color: #2d3a4a;
+  font-weight: 600;
+  text-align: center;
+}
+
+.totals {
+  background: #f1f5f9;
+  border-radius: 8px;
+  padding: 12px 0;
+  margin-bottom: 18px;
+  box-shadow: 0 1px 4px rgba(30,60,90,0.04);
+  font-size: 1.05rem;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+}
+
+#pie-chart {
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(30,60,90,0.08);
+  margin-bottom: 12px;
+  display: block;
+  max-width: 260px;
+  max-height: 260px;
+}
+
+.pie-legend {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px 18px;
+  margin-top: 10px;
+  font-size: 0.92rem;
+  width: 100%;
+  align-items: start;
+  justify-items: start;
+  /* Correction pour forcer 2 colonnes même si peu d'items */
+  min-width: 0;
+}
+
+.pie-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: #f8fafc;
+  box-shadow: 0 1px 2px rgba(30,60,90,0.04);
+  min-height: 22px;
+  width: 100%;
+  word-break: break-word;
+}
+
+.pie-legend-color {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+#expenses-list-switch, #revenues-list-switch {
+  margin-top: 10px;
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+.expense-item, .revenue-item {
+  background: #fff;
+  border-radius: 7px;
+  box-shadow: 0 1px 4px rgba(30,60,90,0.05);
+  margin-bottom: 8px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: box-shadow .15s, background .15s;
+}
+
+.expense-item.paid {
+  background: linear-gradient(90deg, #eafaf1 0%, #f6fdf9 100%);
+  border-left: 4px solid var(--accent);
+}
+
+.expense-content, .revenue-label {
+  font-weight: 500;
+  color: #2d3a4a;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  flex: 1 1 0;
+  word-break: break-word;
+  justify-content: space-between;
+}
+
+.expense-name {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+}
+
+.expense-amount, .revenue-amount {
+  font-family: monospace;
+  color: var(--muted);
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0;
+  margin-right: 0;
+  text-align: center;
+}
+
+.item-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: 12px;
+  justify-content: flex-end;
+}
+
+.btn-pay, .btn-del {
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  transition: background 0.15s, color 0.15s;
+  min-width: 80px;
+  max-width: 120px;
+}
+
+.btn-pay {
+  background: #eafaf1;
+  color: #27ae60;
+  border: 1px solid #b7eac7;
+}
+.btn-pay:hover:enabled { background: #d4f5e3; }
+.btn-del {
+  background: #fff0f0;
+  color: var(--danger);
+  border: 1px solid #f5cccc;
+}
+.btn-del:hover:enabled { background: #ffeaea; }
+
+#expense-type-switch, #revenue-type-switch {
+  border-radius: 6px;
+  padding: 7px 10px;
+  border: 1px solid #e0e6ef;
+  background: #fff;
+  font-size: 1rem;
+  margin-bottom: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.new-item {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(30,60,90,0.07);
+  padding: 18px 24px;
+  max-width: 1000px;
+  width: 100%;
+  margin: 32px auto 0 auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 14px 12px;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.new-item input, .new-item select {
+  padding: 10px 12px;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 1rem;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.new-item input[type="text"] {
+  width: 220px;
+  min-width: 120px;
+  max-width: 100%;
+}
+
+.new-item input[type="number"] {
+  width: 110px;
+  min-width: 80px;
+}
+
+.new-item .type-select {
+  width: 120px;
+  min-width: 80px;
+}
+
+.new-item button {
+  flex-shrink: 0;
+  min-width: 90px;
+  max-width: 140px;
+  white-space: nowrap;
+  margin-left: 8px;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 1rem;
+  border: none;
+  background: #f1f5f9;
+  color: #2d3a4a;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.new-item button:hover:enabled {
+  background: #eafaf1;
+}
+
+.actions {
+  text-align: center;
+  margin-top: 24px;
+  margin-bottom: 1.5%;
+  width: 100%;
+}
+.actions button {
+  margin: 0 8px;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 1rem;
+  border: none;
+  background: #f1f5f9;
+  color: #2d3a4a;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.actions button:hover { background: #eafaf1; }
+
+.edit-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
+}
+
+.edit-name-input, .edit-amount-input, .type-select {
+  padding: 8px 10px;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
